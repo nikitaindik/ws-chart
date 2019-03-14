@@ -1,7 +1,14 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { requestHistory, receiveHistory, receiveUpdate } from '../actions';
+import {
+  requestHistory,
+  receiveHistory,
+  receiveUpdate,
+  changeMode,
+} from '../actions';
+
+import { selectDisplayData } from '../selectors';
 
 import socketModule from '../../setupSocket';
 
@@ -13,19 +20,21 @@ import {
   VictoryScatter,
 } from 'victory';
 
+const oneDayInMs = 1 * 24 * 60 * 60 * 1000;
+const sixHoursInMs = 6 * 60 * 60 * 1000;
+const oneHourInMs = 1 * 60 * 60 * 1000;
+
 const mapStateToProps = state => ({
-  availableData: state.segments.byId[123]
-    ? state.segments.byId[123][1 * 60 * 60 * 1000]
-    : null,
+  availableData: selectDisplayData(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   loadData: () => dispatch(requestHistory()),
-  receiveUpdate: () => dispatch(receiveUpdate()),
+  changeMode: mode => dispatch(changeMode(mode)),
   dispatch,
 });
 
-const ChartContainer = ({ availableData, loadData, dispatch }) => {
+const ChartContainer = ({ availableData, loadData, dispatch, changeMode }) => {
   useEffect(() => {
     socketModule.subscribe(event => {
       switch (event.type) {
@@ -42,7 +51,10 @@ const ChartContainer = ({ availableData, loadData, dispatch }) => {
   return (
     <>
       {availableData ? <Chart data={availableData} /> : <div>Loading...</div>}
-      <ChartModeControls onLoadDataClick={loadData} />
+      <ChartModeControls
+        onLoadDataClick={loadData}
+        onChangeModeClick={changeMode}
+      />
     </>
   );
 };
@@ -54,15 +66,19 @@ const ConnectedChartContainer = connect(
 
 export default ConnectedChartContainer;
 
-const ChartModeControls = ({ onLoadDataClick }) => {
+const ChartModeControls = ({ onLoadDataClick, onChangeModeClick }) => {
   return (
     <div>
       <button onClick={onLoadDataClick}>Load data</button>
-      {/* <button onClick={this.changeMode.bind(null, 'month')}>
-        Last 30 days
-      </button>
-      <button onClick={this.changeMode.bind(null, 'week')}>Last 7 days</button>
-      <button onClick={this.changeMode.bind(null, 'day')}>Last day</button> */}
+      <div>
+        <button onClick={() => onChangeModeClick(oneDayInMs)}>
+          Last 30 days
+        </button>
+        <button onClick={() => onChangeModeClick(sixHoursInMs)}>
+          Last 7 days
+        </button>
+        <button onClick={() => onChangeModeClick(oneHourInMs)}>Last day</button>
+      </div>
     </div>
   );
 };

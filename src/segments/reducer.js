@@ -1,15 +1,18 @@
-import { RECEIVE_HISTORY, RECEIVE_UPDATE } from './actionTypes';
+import { RECEIVE_HISTORY, RECEIVE_UPDATE, CHANGE_MODE } from './actionTypes';
 
 const initialState = {
-  byId: {},
+  activeSegmentId: 123,
+  activeBarSize: 3600000,
+  dataBySegmentId: {},
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case RECEIVE_HISTORY:
       return {
-        byId: {
-          ...state.byId,
+        ...state,
+        dataBySegmentId: {
+          ...state.dataBySegmentId,
           [payload.segmentId]: payload.data,
         },
       };
@@ -23,10 +26,10 @@ export default (state = initialState, { type, payload }) => {
       const { segmentId, change } = payload;
       const updateTimestamp = payload.timestamp;
 
-      const barSizes = Object.keys(state.byId[segmentId]);
+      const barSizes = Object.keys(state.dataBySegmentId[segmentId]);
       const updatedSegmentData = barSizes.reduce(
         (updatedSegmentData, barSize) => {
-          const bars = state.byId[segmentId][barSize];
+          const bars = state.dataBySegmentId[segmentId][barSize];
           const latestBarStartTimestamp = bars[bars.length - 1].timestamp;
           const latestBarEndTimestamp =
             latestBarStartTimestamp + Number(barSize);
@@ -74,10 +77,16 @@ export default (state = initialState, { type, payload }) => {
       );
 
       return {
-        byId: {
-          ...state.byId,
+        ...state,
+        dataBySegmentId: {
+          ...state.dataBySegmentId,
           [payload.segmentId]: updatedSegmentData,
         },
+      };
+    case CHANGE_MODE:
+      return {
+        ...state,
+        activeBarSize: payload,
       };
     default:
       return state;
