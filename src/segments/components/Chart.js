@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import {
-  requestHistory,
-  receiveHistory,
-  receiveUpdate,
-  changeMode,
-} from '../actions';
+import { receiveHistory, receiveUpdate, changeMode } from '../actions';
+import { socketEventTypes } from '../constants';
 
 import { selectDisplayData } from '../selectors';
 
@@ -29,32 +25,34 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadData: () => dispatch(requestHistory()),
   changeMode: mode => dispatch(changeMode(mode)),
   dispatch,
 });
 
-const ChartContainer = ({ availableData, loadData, dispatch, changeMode }) => {
+const ChartContainer = ({ availableData, dispatch, changeMode }) => {
   useEffect(() => {
     socketModule.subscribe(event => {
       switch (event.type) {
-        case 'history':
-          dispatch(receiveHistory(event.data));
+        case socketEventTypes.SEGMENT_HISTORY:
+          const { segmentId, data } = event.payload;
+          dispatch(receiveHistory(segmentId, data));
           break;
-        case 'update':
+        case socketEventTypes.SEGMENT_UPDATE:
           dispatch(receiveUpdate(event.data));
           break;
         default:
       }
     });
   }, []);
+
+  if (!availableData) {
+    return null;
+  }
+
   return (
     <>
-      {availableData ? <Chart data={availableData} /> : <div>Loading...</div>}
-      <ChartModeControls
-        onLoadDataClick={loadData}
-        onChangeModeClick={changeMode}
-      />
+      <Chart data={availableData} />
+      <ChartModeControls onChangeModeClick={changeMode} />
     </>
   );
 };
@@ -66,10 +64,9 @@ const ConnectedChartContainer = connect(
 
 export default ConnectedChartContainer;
 
-const ChartModeControls = ({ onLoadDataClick, onChangeModeClick }) => {
+const ChartModeControls = ({ onChangeModeClick }) => {
   return (
     <div>
-      <button onClick={onLoadDataClick}>Load data</button>
       <div>
         <button onClick={() => onChangeModeClick(oneDayInMs)}>
           Last 30 days

@@ -1,19 +1,50 @@
-import { RECEIVE_HISTORY, RECEIVE_UPDATE, CHANGE_MODE } from './actionTypes';
+import {
+  LOAD_SEGMENT_LIST_REQUEST,
+  LOAD_SEGMENT_LIST_SUCCESS,
+  SET_ACTIVE_SEGMENT,
+  RECEIVE_HISTORY,
+  RECEIVE_UPDATE,
+  CHANGE_MODE,
+} from './actionTypes';
 
 const initialState = {
-  activeSegmentId: 123,
-  activeBarSize: 3600000,
-  dataBySegmentId: {},
+  isListLoaded: false,
+  activeSegmentId: null,
+  activeBarSize: null,
+  byId: {},
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case RECEIVE_HISTORY:
+    case LOAD_SEGMENT_LIST_REQUEST:
       return {
         ...state,
-        dataBySegmentId: {
-          ...state.dataBySegmentId,
-          [payload.segmentId]: payload.data,
+        isListLoaded: false,
+      };
+    case LOAD_SEGMENT_LIST_SUCCESS:
+      const byId = {};
+      payload.forEach(segment => (byId[segment.id] = { name: segment.name }));
+      return {
+        ...state,
+        isListLoaded: true,
+        byId,
+      };
+    case SET_ACTIVE_SEGMENT:
+      return {
+        ...state,
+        activeSegmentId: payload,
+      };
+    case RECEIVE_HISTORY:
+      const activeBarSize = state.activeBarSize || Object.keys(payload.data)[0];
+      return {
+        ...state,
+        activeBarSize,
+        byId: {
+          ...state.byId,
+          [payload.segmentId]: {
+            ...state.byId[payload.segmentId],
+            dataByBarSize: payload.data,
+          },
         },
       };
     case RECEIVE_UPDATE:
@@ -26,10 +57,10 @@ export default (state = initialState, { type, payload }) => {
       const { segmentId, change } = payload;
       const updateTimestamp = payload.timestamp;
 
-      const barSizes = Object.keys(state.dataBySegmentId[segmentId]);
+      const barSizes = Object.keys(state.byId[segmentId].dataByBarSize);
       const updatedSegmentData = barSizes.reduce(
         (updatedSegmentData, barSize) => {
-          const bars = state.dataBySegmentId[segmentId][barSize];
+          const bars = state.byId[segmentId].dataByBarSize[barSize];
           const latestBarStartTimestamp = bars[bars.length - 1].timestamp;
           const latestBarEndTimestamp =
             latestBarStartTimestamp + Number(barSize);
@@ -78,9 +109,12 @@ export default (state = initialState, { type, payload }) => {
 
       return {
         ...state,
-        dataBySegmentId: {
-          ...state.dataBySegmentId,
-          [payload.segmentId]: updatedSegmentData,
+        byId: {
+          ...state.byId,
+          [payload.segmentId]: {
+            ...state.byId[payload.segmentId],
+            dataByBarSize: updatedSegmentData,
+          },
         },
       };
     case CHANGE_MODE:
