@@ -110,7 +110,6 @@ const trimData = (data, period, barSize) => {
   const lastBarEndTimestamp =
     dayStartTimestamp + barsElapsedSinceDayStart * barSize;
 
-  const oneDayInMs = 1 * 24 * 60 * 60 * 1000;
   const trimmedDataStartTimestamp = lastBarEndTimestamp - period;
 
   const piecesToCut =

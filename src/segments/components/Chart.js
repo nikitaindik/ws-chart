@@ -62,12 +62,16 @@ const LegendItem = ({ icon, label, value, primary }) => (
   </div>
 );
 
-const Legend = ({ activeBarData }) => {
-  if (!activeBarData) {
-    return <div style={{ height: '100px' }}>Hover over chart</div>;
+const Legend = ({ activeBarData, showLatestBarData, latestBarData }) => {
+  let data;
+
+  if (!showLatestBarData && activeBarData) {
+    data = activeBarData;
+  } else {
+    data = latestBarData;
   }
 
-  const { added, removed, segmentSize, timestamp } = activeBarData;
+  const { added, removed, segmentSize, timestamp } = data;
 
   const formatter = timeFormat('%b %d, %H:%M');
   const formattedTime = formatter(timestamp);
@@ -105,7 +109,13 @@ const Legend = ({ activeBarData }) => {
           value={segmentSize}
           primary
         />
-        <LegendItem icon={<TimeIcon />} label={'Time'} value={formattedTime} />
+        {!showLatestBarData && (
+          <LegendItem
+            icon={<TimeIcon />}
+            label={'Time'}
+            value={formattedTime}
+          />
+        )}
       </div>
     </div>
   );
@@ -134,14 +144,26 @@ const ChartContainer = ({
 
   const [activeBarData, setActiveBarData] = useState(null);
 
+  const [isHovered, setIsHovered] = useState(false);
+
   if (!availableData) {
     return null;
   }
 
+  const latestBarData = availableData[availableData.length - 1];
+
   return (
     <>
-      <Legend activeBarData={activeBarData} />
-      <div style={{ height: '400px' }}>
+      <Legend
+        activeBarData={activeBarData}
+        showLatestBarData={!isHovered}
+        latestBarData={latestBarData}
+      />
+      <div
+        style={{ height: '400px' }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <Chart data={availableData} setActiveBarData={setActiveBarData} />
       </div>
       <ChartModeControls
@@ -192,7 +214,7 @@ const ChartModeControls = ({ activeBarSize, onChangeModeClick }) => {
 
 const Chart = ({ data, setActiveBarData }) => (
   <VictoryChart
-    padding={{ top: 0, left: 40, right: 40, bottom: 50 }}
+    padding={{ top: 20, left: 20, right: 20, bottom: 50 }}
     domainPadding={20}
     scale={{ x: 'time' }}
     height={300}
