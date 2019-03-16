@@ -11,5 +11,5 @@ export const selectDisplayData = state => {
 };
 export const selectSegments = state => {
   const segmentsIds = Object.keys(state.segments.byId);
-  return segmentsIds.map(id => ({ ...state.segments.byId[id], id }));
+  return segmentsIds.map(id => ({ ...state.segments.byId[id], id: +id }));
 };

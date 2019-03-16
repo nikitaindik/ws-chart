@@ -1,0 +1,16 @@
+.button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+
+  padding: 8px;
+  width: 200px;
+}
+
+.active {
+  background: #6c59d3;
+  color: #fff;
+}

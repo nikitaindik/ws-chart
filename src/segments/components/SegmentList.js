@@ -4,18 +4,20 @@ import { connect } from 'react-redux';
 import { loadSegmentList, chooseSegment } from '../actions';
 import { selectSegments } from '../selectors';
 
+import Button from '../../components/Button';
+
+import style from './SegmentList.module.css';
+
 const SegmentList = ({ segments, activeSegmentId, onSegmentClick }) => (
-  <div>
+  <div className={style.list}>
     {segments.map(segment => (
       <div key={segment.id}>
-        <button
-          style={{
-            fontWeight: segment.id === activeSegmentId ? 'bold' : 'normal',
-          }}
+        <Button
+          isActive={segment.id === activeSegmentId}
           onClick={() => onSegmentClick(segment.id)}
         >
           {segment.name}
-        </button>
+        </Button>
       </div>
     ))}
   </div>

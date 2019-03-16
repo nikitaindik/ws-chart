@@ -35,7 +35,8 @@ export default (state = initialState, { type, payload }) => {
         activeSegmentId: payload,
       };
     case RECEIVE_HISTORY:
-      const activeBarSize = state.activeBarSize || Object.keys(payload.data)[0];
+      const activeBarSize =
+        state.activeBarSize || Number(Object.keys(payload.data)[0]);
       return {
         ...state,
         activeBarSize,

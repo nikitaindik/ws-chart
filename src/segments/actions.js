@@ -17,6 +17,7 @@ export const loadSegmentList = () => async dispatch => {
   try {
     const segmentList = await api.fetchSegmentList();
     dispatch(loadSegmentListSuccess(segmentList));
+    dispatch(chooseSegment(segmentList[0].id));
   } catch {}
 };
 

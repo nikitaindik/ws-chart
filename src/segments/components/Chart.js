@@ -1,6 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import {
+  VictoryChart,
+  VictoryBar,
+  VictoryLine,
+  VictoryAxis,
+  VictoryScatter,
+  VictoryTooltip,
+} from 'victory';
+
 import { receiveHistory, receiveUpdate, changeMode } from '../actions';
 import { socketEventTypes } from '../constants';
 
@@ -8,13 +17,7 @@ import { selectDisplayData } from '../selectors';
 
 import socketModule from '../../setupSocket';
 
-import {
-  VictoryChart,
-  VictoryBar,
-  VictoryLine,
-  VictoryAxis,
-  VictoryScatter,
-} from 'victory';
+import Button from '../../components/Button';
 
 const oneDayInMs = 1 * 24 * 60 * 60 * 1000;
 const sixHoursInMs = 6 * 60 * 60 * 1000;
@@ -22,6 +25,7 @@ const oneHourInMs = 1 * 60 * 60 * 1000;
 
 const mapStateToProps = state => ({
   availableData: selectDisplayData(state),
+  activeBarSize: state.segments.activeBarSize,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -29,7 +33,12 @@ const mapDispatchToProps = dispatch => ({
   dispatch,
 });
 
-const ChartContainer = ({ availableData, dispatch, changeMode }) => {
+const ChartContainer = ({
+  activeBarSize,
+  availableData,
+  dispatch,
+  changeMode,
+}) => {
   useEffect(() => {
     socketModule.subscribe(event => {
       switch (event.type) {
@@ -52,7 +61,10 @@ const ChartContainer = ({ availableData, dispatch, changeMode }) => {
   return (
     <>
       <Chart data={availableData} />
-      <ChartModeControls onChangeModeClick={changeMode} />
+      <ChartModeControls
+        activeBarSize={activeBarSize}
+        onChangeModeClick={changeMode}
+      />
     </>
   );
 };
@@ -64,17 +76,34 @@ const ConnectedChartContainer = connect(
 
 export default ConnectedChartContainer;
 
-const ChartModeControls = ({ onChangeModeClick }) => {
+const ChartModeControls = ({ activeBarSize, onChangeModeClick }) => {
   return (
     <div>
       <div>
-        <button onClick={() => onChangeModeClick(oneDayInMs)}>
+        <Button
+          isActive={activeBarSize === 86400000}
+          onClick={() => onChangeModeClick(oneDayInMs)}
+        >
           Last 30 days
-        </button>
-        <button onClick={() => onChangeModeClick(sixHoursInMs)}>
+        </Button>
+        <Button
+          isActive={activeBarSize === 21600000}
+          onClick={() => onChangeModeClick(sixHoursInMs)}
+        >
           Last 7 days
-        </button>
-        <button onClick={() => onChangeModeClick(oneHourInMs)}>Last day</button>
+        </Button>
+        <Button
+          isActive={activeBarSize === 3600000}
+          onClick={() => onChangeModeClick(oneHourInMs)}
+        >
+          Last 24 hours
+        </Button>
+        <Button
+          isActive={activeBarSize === 300000}
+          onClick={() => onChangeModeClick(300000)}
+        >
+          Last 60 minutes
+        </Button>
       </div>
     </div>
   );
@@ -124,6 +153,8 @@ const Chart = ({ data }) => (
       y="segmentSize"
       style={{ data: { fill: '#008af7' } }}
       animate
+      labels={d => new Date(d.timestamp).toString()}
+      labelComponent={<VictoryTooltip />}
     />
   </VictoryChart>
 );

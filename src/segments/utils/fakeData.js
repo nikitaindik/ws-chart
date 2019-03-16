@@ -10,18 +10,28 @@ const getChange = currentSegmentSize => {
   };
 };
 
-const generateFakeData = () => {
+// TODO: Use d3-time interval.range to generate timestamps?
+const generateFakeData = days => {
+  // Gens (days + half day of data)
+  // Generated data starts at the beginning of a day
   const oneDayInMs = 1 * 24 * 60 * 60 * 1000;
   const fiveMinsInMs = 5 * 60 * 1000;
-  const finishTimestamp = new Date().getTime();
-  const startTimestamp = finishTimestamp - 30 * oneDayInMs;
+
+  // Data for 16th of May means state of data at the end of 16th of May
+  const endTimestamp = Date.now();
+  const startTimestamp = new Date(endTimestamp - days * oneDayInMs).setHours(
+    24,
+    0,
+    0,
+    0,
+  );
 
   let currentSegmentSize = 0;
   const result = [];
 
   for (
     let currentTimestamp = startTimestamp;
-    currentTimestamp < finishTimestamp;
+    currentTimestamp < endTimestamp;
     currentTimestamp += fiveMinsInMs
   ) {
     const change = getChange(currentSegmentSize);
@@ -36,6 +46,7 @@ const generateFakeData = () => {
 };
 
 const groupData = (data, inputSize, outputSize) => {
+  // Groups 5 minute data into arrays of given size
   const groupSize = outputSize / inputSize;
 
   const groupedByIndex = data.reduce(
@@ -86,30 +97,56 @@ const flipRemovedSign = data => {
   });
 };
 
+// 30 days grouped by 1 day: 29.5 days starting at current bar end - 30 days
+// 7 days grouped by 6 hours: 6.5 days starting at current bar end - 7 days
+// 1 day grouped by 1 hour: 23.5 hours starting at current bar end - 24 hours
+const trimData = (data, period, barSize) => {
+  const pieceSize = data[1].timestamp - data[0].timestamp;
+  const latestTimestamp = data[data.length - 1].timestamp;
+  const dayStartTimestamp = new Date(latestTimestamp).setHours(0, 0, 0, 0);
+  const barsElapsedSinceDayStart = Math.ceil(
+    (latestTimestamp - dayStartTimestamp) / barSize,
+  );
+  const lastBarEndTimestamp =
+    dayStartTimestamp + barsElapsedSinceDayStart * barSize;
+
+  const oneDayInMs = 1 * 24 * 60 * 60 * 1000;
+  const trimmedDataStartTimestamp = lastBarEndTimestamp - period;
+
+  const piecesToCut =
+    (latestTimestamp - trimmedDataStartTimestamp) / pieceSize + 1;
+
+  const trimmedData = data.slice(-piecesToCut);
+
+  return trimmedData;
+};
+
 const getFakeDataForDisplay = () => {
-  const fakeData = generateFakeData();
-
-  const thirtyDaysOfData = fakeData;
-  const sevenDaysOfData = fakeData.slice(-(fakeData.length / 7));
-  const oneDayOfData = fakeData.slice(-(fakeData.length / 30));
-
-  const thirtyDaysGroupedBy1Day = groupData(thirtyDaysOfData, 5, 60 * 24);
-  const sevenDaysGroupedBy6Hours = groupData(sevenDaysOfData, 5, 60 * 6);
-  const oneDayGroupedBy1Hour = groupData(oneDayOfData, 5, 60);
-  //   const thirtyDaysGroupedBy1Day = groupData(thirtyDaysOfData, 5, 60 * 24);
-  //   const testGroupedBy12Hours = groupData(thirtyDaysOfData, 5, 60 * 12);
-  //   const sevenDaysGroupedBy6Hours = groupData(thirtyDaysOfData, 5, 60 * 6);
-  //   const oneDayGroupedBy1Hour = groupData(thirtyDaysOfData, 5, 60);
+  // Generate 29.5 days of data
+  const fakeData = generateFakeData(30);
 
   const oneDayInMs = 1 * 24 * 60 * 60 * 1000;
   const sixHoursInMs = 6 * 60 * 60 * 1000;
   const oneHourInMs = 1 * 60 * 60 * 1000;
+  const fiveMinsInMs = 5 * 60 * 1000;
+
+  // Optionally trim data
+  const last30DaysData = trimData(fakeData, 30 * oneDayInMs, oneDayInMs);
+  const last7DaysData = trimData(fakeData, 7 * oneDayInMs, sixHoursInMs);
+  const last1DayData = trimData(fakeData, 1 * oneDayInMs, oneHourInMs);
+  const last1HourData = trimData(fakeData, oneHourInMs, fiveMinsInMs);
+
+  const groupedBy1Day = groupData(last30DaysData, 5, 60 * 24);
+  const groupedBy6Hours = groupData(last7DaysData, 5, 60 * 6);
+  const groupedBy1Hour = groupData(last1DayData, 5, 60);
+  const groupedBy5Mins = groupData(last1HourData, 5, 5);
 
   return {
     // testGroupedBy12Hours: flipRemovedSign(batchData(testGroupedBy12Hours)),
-    [oneDayInMs]: flipRemovedSign(batchData(thirtyDaysGroupedBy1Day)),
-    [sixHoursInMs]: flipRemovedSign(batchData(sevenDaysGroupedBy6Hours)),
-    [oneHourInMs]: flipRemovedSign(batchData(oneDayGroupedBy1Hour)),
+    [oneDayInMs]: flipRemovedSign(batchData(groupedBy1Day)),
+    [sixHoursInMs]: flipRemovedSign(batchData(groupedBy6Hours)),
+    [oneHourInMs]: flipRemovedSign(batchData(groupedBy1Hour)),
+    [fiveMinsInMs]: flipRemovedSign(batchData(groupedBy5Mins)),
   };
 };
 

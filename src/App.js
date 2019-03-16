@@ -7,7 +7,10 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App" style={{ display: 'flex' }}>
+      <div
+        className="App"
+        style={{ display: 'flex', maxWidth: '1280px', margin: '0 auto' }}
+      >
         <div style={{ width: '300px' }}>
           <SegmentList />
         </div>
