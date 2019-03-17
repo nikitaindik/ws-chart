@@ -1,4 +1,4 @@
-import * as components from './components';
+import components from './components';
 import * as actions from './actions';
 import reducer from './reducer';
 

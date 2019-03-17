@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { receiveHistory, receiveUpdate } from '../actions';
-import { socketEventTypes } from '../constants';
+import { receiveHistory, receiveUpdate } from '../../actions';
+import { socketEventTypes } from '../../constants';
 
-import { selectDisplayData } from '../selectors';
+import { selectDisplayData } from '../../selectors';
 
-import socketModule from '../../core/webSocketConnection';
+import webSocketConnection from '../../../core/webSocketConnection';
 
-import ChartLegend from './ChartLegend';
+import ChartLegend from '../ChartLegend/ChartLegend';
 import Chart from './Chart';
-import ChartModeContainer from './ChartModeContainer';
+import ChartModeContainer from '../ChartMode/ChartModeContainer';
 
-import mockWebSocketServer from '../../core/mockWebSocketServer';
-import mockServerResponses from '../utils/mockServerResponses';
+import mockWebSocketServer from '../../../core/mockWebSocketServer';
+import mockServerResponses from '../../utils/mockServerResponses';
 
 if (process.env.REACT_APP_USE_MOCK_SERVER === 'true') {
   // Use mock server for development, real server - for production
@@ -21,7 +21,7 @@ if (process.env.REACT_APP_USE_MOCK_SERVER === 'true') {
 }
 
 const handleSocketEvents = dispatch => {
-  return socketModule.subscribe(event => {
+  return webSocketConnection.subscribe(event => {
     switch (event.type) {
       case socketEventTypes.SEGMENT_HISTORY:
         const { segmentId, data } = event.payload;

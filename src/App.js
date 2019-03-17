@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import ChartContainer from './segments/components/ChartContainer';
-import SegmentList from './segments/components/SegmentListContainer';
+import segmentsModule from './segments';
 
 import style from './App.module.css';
 
+const { SegmentList, Chart } = segmentsModule.components;
 class App extends Component {
   render() {
     return (
@@ -13,7 +13,7 @@ class App extends Component {
           <SegmentList />
         </div>
         <div className={style.chartSection}>
-          <ChartContainer />
+          <Chart />
         </div>
       </div>
     );

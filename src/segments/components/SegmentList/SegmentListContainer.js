@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { loadSegmentList, chooseSegment } from '../actions';
+import { loadSegmentList, chooseSegment } from '../../actions';
 import {
   selectSegments,
   selectIsListLoaded,
   selectActiveSegmentId,
-} from '../selectors';
+} from '../../selectors';
 
 import SegmentList from './SegmentList';
 
