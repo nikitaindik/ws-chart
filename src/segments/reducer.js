@@ -1,3 +1,5 @@
+import { set } from 'dot-prop-immutable';
+
 import {
   LOAD_SEGMENT_LIST_REQUEST,
   LOAD_SEGMENT_LIST_SUCCESS,
@@ -42,13 +44,8 @@ const getLargestBarSize = dataByBarSize => {
   return Math.max(...barSizes);
 };
 
-const handleLoadSegmentListRequest = state => ({
-  ...state,
-  list: {
-    ...state.list,
-    isLoaded: false,
-  },
-});
+const handleLoadSegmentListRequest = state =>
+  set(state, 'list.isLoaded', false);
 
 const handleLoadSegmentListSuccess = (state, payload) => {
   const byId = payload.reduce(
@@ -61,21 +58,16 @@ const handleLoadSegmentListSuccess = (state, payload) => {
 
   const allIds = payload.map(segment => segment.id);
 
-  return {
-    ...state,
-    list: {
-      ...state.list,
-      byId,
-      allIds,
-      isLoaded: true,
-    },
-  };
+  return set(state, 'list', {
+    ...state.list,
+    byId,
+    allIds,
+    isLoaded: true,
+  });
 };
 
-const handleSetActiveSegment = (state, payload) => ({
-  ...state,
-  activeSegmentId: payload,
-});
+const handleSetActiveSegment = (state, payload) =>
+  set(state, 'activeSegmentId', payload);
 
 const handleReceiveHistory = (state, payload) => {
   let activeBarSize = state.activeBarSize;
@@ -84,44 +76,14 @@ const handleReceiveHistory = (state, payload) => {
     activeBarSize = getLargestBarSize(payload.data);
   }
 
-  return {
-    ...state,
-    activeBarSize,
-    byId: {
-      ...state.byId,
-      [payload.segmentId]: {
-        ...state.byId[payload.segmentId],
-        dataByBarSize: payload.data,
-      },
-    },
-  };
-};
+  let updatedState = set(state, 'activeBarSize', activeBarSize);
+  updatedState = set(
+    updatedState,
+    `byId.${payload.segmentId}.dataByBarSize`,
+    payload.data,
+  );
 
-const addNewBar = (bars, change, latestBarEndTimestamp) => {
-  const latestBar = bars[bars.length - 1];
-  const newBar = {
-    added: change > 0 ? change : 0,
-    removed: change < 0 ? change : 0,
-    segmentSize: latestBar.segmentSize + change,
-    timestamp: latestBarEndTimestamp,
-  };
-  return [...bars, newBar];
-};
-
-const updateLatestBar = (bars, change) => {
-  const latestBar = bars[bars.length - 1];
-  const updatedLatestBar = {
-    ...latestBar,
-  };
-
-  updatedLatestBar.added =
-    change > 0 ? updatedLatestBar.added + change : updatedLatestBar.added;
-  updatedLatestBar.removed =
-    change < 0 ? updatedLatestBar.removed + change : updatedLatestBar.removed;
-
-  updatedLatestBar.segmentSize += change;
-
-  return [...bars.slice(0, -1), updatedLatestBar];
+  return updatedState;
 };
 
 const handleReceiveUpdate = (state, payload) => {
@@ -146,19 +108,40 @@ const handleReceiveUpdate = (state, payload) => {
     };
   }, {});
 
-  return {
-    ...state,
-    byId: {
-      ...state.byId,
-      [payload.segmentId]: {
-        ...state.byId[payload.segmentId],
-        dataByBarSize: updatedSegmentData,
-      },
-    },
-  };
+  return set(
+    state,
+    `byId.${payload.segmentId}.dataByBarSize`,
+    updatedSegmentData,
+  );
 };
 
-const handleChangeMode = (state, payload) => ({
-  ...state,
-  activeBarSize: payload,
-});
+const addNewBar = (bars, change, latestBarEndTimestamp) => {
+  const latestBar = bars[bars.length - 1];
+  const newBar = {
+    added: change > 0 ? change : 0,
+    removed: change < 0 ? change : 0,
+    segmentSize: latestBar.segmentSize + change,
+    timestamp: latestBarEndTimestamp,
+  };
+  return [...bars, newBar];
+};
+
+const updateLatestBar = (bars, change) => {
+  const latestBar = bars[bars.length - 1];
+  const updatedLatestBar = {
+    ...latestBar,
+  };
+
+  if (change > 0) {
+    updatedLatestBar.added += change;
+  } else {
+    updatedLatestBar.removed += change;
+  }
+
+  updatedLatestBar.segmentSize += change;
+
+  return [...bars.slice(0, -1), updatedLatestBar];
+};
+
+const handleChangeMode = (state, payload) =>
+  set(state, 'activeBarSize', payload);
