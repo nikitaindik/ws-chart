@@ -4,24 +4,32 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
+import mockWebSocketServer from './core/mockWebSocketServer';
+import webSocketConnection from './core/webSocketConnection';
+
 import rootReducer from './rootReducer';
 
 import App from './App';
 
 import './index.css';
 
-import setupSocket from './setupSocket';
+if (process.env.REACT_APP_USE_MOCK_SERVER === 'true') {
+  // Mock server for dev purposes. Will use actual API in prod.
+  mockWebSocketServer.init();
+}
 
-const { initConnection, sendMessage } = setupSocket;
+webSocketConnection.init();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk.withExtraArgument({ sendMessage }))),
+  composeEnhancers(
+    applyMiddleware(
+      thunk.withExtraArgument({ sendMessage: webSocketConnection.sendMessage }),
+    ),
+  ),
 );
-
-initConnection();
 
 ReactDOM.render(
   <Provider store={store}>

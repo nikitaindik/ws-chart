@@ -6,11 +6,19 @@ import { socketEventTypes } from '../constants';
 
 import { selectDisplayData } from '../selectors';
 
-import socketModule from '../../setupSocket';
+import socketModule from '../../core/webSocketConnection';
 
 import ChartLegend from './ChartLegend';
 import Chart from './Chart';
 import ChartModeContainer from './ChartModeContainer';
+
+import mockWebSocketServer from '../../core/mockWebSocketServer';
+import mockServerResponses from '../utils/mockServerResponses';
+
+if (process.env.REACT_APP_USE_MOCK_SERVER === 'true') {
+  // Use mock server for development, real server - for production
+  mockWebSocketServer.subscribe(mockServerResponses);
+}
 
 const handleSocketEvents = dispatch => {
   return socketModule.subscribe(event => {
