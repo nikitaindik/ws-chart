@@ -9,6 +9,8 @@ import {
   VictoryVoronoiContainer,
 } from 'victory';
 
+import { colors } from '../../constants';
+
 import style from './Chart.module.css';
 
 const Chart = ({ data, setActiveBarData, setIsHovered }) => (
@@ -55,7 +57,7 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
         x="timestamp"
         y="added"
         name="added"
-        style={{ data: { fill: '#6c59d3' } }}
+        style={{ data: { fill: colors.CHART_POSITIVE_COLOR } }}
         // animate
       />
       <VictoryBar
@@ -63,7 +65,7 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
         x="timestamp"
         y="removed"
         name="removed"
-        style={{ data: { fill: '#999ea1' } }}
+        style={{ data: { fill: colors.CHART_NEGATIVE_COLOR } }}
         // animate
       />
       <VictoryLine
@@ -72,7 +74,7 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
         y="segmentSize"
         name="segmentSize"
         interpolation="natural"
-        style={{ data: { stroke: '#008af7' } }}
+        style={{ data: { stroke: colors.CHART_LINE_COLOR } }}
         // animate
       />
       <VictoryScatter
@@ -81,7 +83,11 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
         y="segmentSize"
         size={(datum, active) => (active ? 5 : 0)}
         style={{
-          data: { fill: '#008af7', stroke: '#fff', strokeWidth: '1px' },
+          data: {
+            fill: colors.CHART_LINE_COLOR,
+            stroke: '#fff',
+            strokeWidth: '1px',
+          },
         }}
         // animate
       />

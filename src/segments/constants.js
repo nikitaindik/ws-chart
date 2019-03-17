@@ -3,3 +3,9 @@ export const socketEventTypes = {
   SEGMENT_HISTORY: 'SEGMENT_HISTORY',
   SEGMENT_UPDATE: 'SEGMENT_UPDATE',
 };
+
+export const colors = {
+  CHART_POSITIVE_COLOR: '#6c59d3',
+  CHART_NEGATIVE_COLOR: '#999ea1',
+  CHART_LINE_COLOR: '#008af7',
+};

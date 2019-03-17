@@ -3,6 +3,9 @@ import { timeFormat } from 'd3-time-format';
 import cx from 'classnames';
 
 import { ReactComponent as TimeIcon } from '../icons/TimeIcon.svg';
+
+import { colors } from '../../constants';
+
 import style from './ChartLegend.module.css';
 
 const LegendIconSquare = ({ color }) => (
@@ -41,19 +44,19 @@ const ChartLegend = ({ activeBarData, showLatestBarData, latestBarData }) => {
     <div className={style.legendWrap}>
       <div className={style.column}>
         <LegendItem
-          icon={<LegendIconSquare color="#6c59d3" />}
+          icon={<LegendIconSquare color={colors.CHART_POSITIVE_COLOR} />}
           label={'Added'}
           value={added}
         />
         <LegendItem
-          icon={<LegendIconSquare color="#999ea1" />}
+          icon={<LegendIconSquare color={colors.CHART_NEGATIVE_COLOR} />}
           label={'Removed'}
           value={Math.abs(removed)}
         />
       </div>
       <div className={style.column}>
         <LegendItem
-          icon={<LegendIconLine color="#008af7" />}
+          icon={<LegendIconLine color={colors.CHART_LINE_COLOR} />}
           label={'Size'}
           value={segmentSize}
           primary
