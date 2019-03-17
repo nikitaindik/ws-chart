@@ -17,7 +17,9 @@ const SegmentListContainer = ({
   segments,
   activeSegmentId,
 }) => {
-  useEffect(loadList, []);
+  useEffect(() => {
+    loadList();
+  }, []);
 
   if (!isListLoaded) {
     return <div>Loading...</div>;

@@ -21,7 +21,7 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
   >
     <VictoryChart
       animate={false}
-      padding={{ top: 20, left: 30, right: 30, bottom: 50 }}
+      padding={{ top: 20, left: 40, right: 40, bottom: 50 }}
       domainPadding={20}
       scale={{ x: 'time' }}
       height={300}

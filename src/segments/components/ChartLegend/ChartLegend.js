@@ -8,6 +8,8 @@ import { colors } from '../../constants';
 
 import style from './ChartLegend.module.css';
 
+const formatter = timeFormat('%b %d, %H:%M');
+
 const LegendIconSquare = ({ color }) => (
   <div className={style.iconWrap} style={{ background: color }} />
 );
@@ -26,19 +28,26 @@ const LegendItem = ({ icon, label, value, primary }) => (
   </div>
 );
 
-const ChartLegend = ({ activeBarData, showLatestBarData, latestBarData }) => {
+const ChartLegend = ({
+  hoveredBarData,
+  showLatestBarData,
+  latestBarData,
+  activeBarSize,
+}) => {
   let data;
 
-  if (!showLatestBarData && activeBarData) {
-    data = activeBarData;
+  if (!showLatestBarData && hoveredBarData) {
+    data = hoveredBarData;
   } else {
     data = latestBarData;
   }
 
-  const { added, removed, segmentSize, timestamp } = data;
+  const { added, removed, segmentSize } = data;
+  const barStartTimestamp = data.timestamp;
 
-  const formatter = timeFormat('%b %d, %H:%M');
-  const formattedTime = formatter(timestamp);
+  const formattedTime = showLatestBarData
+    ? formatter(Date.now())
+    : formatter(barStartTimestamp + activeBarSize);
 
   return (
     <div className={style.legendWrap}>
@@ -61,13 +70,7 @@ const ChartLegend = ({ activeBarData, showLatestBarData, latestBarData }) => {
           value={segmentSize}
           primary
         />
-        {!showLatestBarData && (
-          <LegendItem
-            icon={<TimeIcon />}
-            label={'Time'}
-            value={formattedTime}
-          />
-        )}
+        <LegendItem icon={<TimeIcon />} label={'Time'} value={formattedTime} />
       </div>
     </div>
   );

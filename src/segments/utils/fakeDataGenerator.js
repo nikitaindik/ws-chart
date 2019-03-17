@@ -94,7 +94,7 @@ const batchData = slices => {
       result.added += sliceItem.added;
       result.removed += sliceItem.removed;
       result.segmentSize =
-        result.segmentSize + sliceItem.added - sliceItem.removed;
+        result.segmentSize + sliceItem.added + sliceItem.removed;
 
       return result;
     }, {});

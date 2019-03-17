@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { receiveHistory, receiveUpdate } from '../../actions';
 import { socketEventTypes } from '../../constants';
 
-import { selectDisplayData } from '../../selectors';
+import { selectDisplayData, selectActiveBarSize } from '../../selectors';
 
 import webSocketConnection from '../../../core/webSocketConnection';
 
@@ -35,28 +35,32 @@ const handleSocketEvents = dispatch => {
   });
 };
 
-const ChartContainer = ({ availableData, dispatch }) => {
+const ChartContainer = ({ dataToDisplay, activeBarSize, dispatch }) => {
   useEffect(() => handleSocketEvents(dispatch), []);
 
-  const [activeBarData, setActiveBarData] = useState(null);
+  const [hoveredBarData, setHoveredBarData] = useState(null);
   const [isHovered, setIsHovered] = useState(false);
 
-  if (!availableData) {
+  if (!dataToDisplay) {
     return null;
   }
 
-  const latestBarData = availableData[availableData.length - 1];
+  const latestBarData = dataToDisplay[dataToDisplay.length - 1];
+  const isHoveringOverLastBar =
+    hoveredBarData && hoveredBarData.timestamp === latestBarData.timestamp;
 
   return (
     <>
       <ChartLegend
-        activeBarData={activeBarData}
-        showLatestBarData={!isHovered}
+        hoveredBarData={hoveredBarData}
+        showLatestBarData={!isHovered || isHoveringOverLastBar}
         latestBarData={latestBarData}
+        isHoveringOverLastBar={isHoveringOverLastBar}
+        activeBarSize={activeBarSize}
       />
       <Chart
-        data={availableData}
-        setActiveBarData={setActiveBarData}
+        data={dataToDisplay}
+        setActiveBarData={setHoveredBarData}
         setIsHovered={setIsHovered}
       />
       <ChartModeContainer />
@@ -65,7 +69,8 @@ const ChartContainer = ({ availableData, dispatch }) => {
 };
 
 const mapStateToProps = state => ({
-  availableData: selectDisplayData(state),
+  dataToDisplay: selectDisplayData(state),
+  activeBarSize: selectActiveBarSize(state),
 });
 
 export default connect(mapStateToProps)(ChartContainer);
