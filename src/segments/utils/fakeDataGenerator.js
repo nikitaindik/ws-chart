@@ -3,7 +3,8 @@ const ONE_HOUR_IN_MS = 60 * ONE_MINUTE_IN_MS;
 const ONE_DAY_IN_MS = 24 * ONE_HOUR_IN_MS;
 
 const getUpdate = currentSegmentSize => {
-  const added = Math.random() > 0.9 ? 1 : 0;
+  // Aiming for a slightly upward pointing chart
+  const added = Math.random() > 0.89 ? 1 : 0;
   let removed = Math.random() > 0.9 ? -1 : 0;
 
   if (Math.abs(removed) > currentSegmentSize + added) {
@@ -63,7 +64,6 @@ const generateFakeData = days => {
 const groupData = (data, inputSize, outputSize) => {
   // Groups data into arrays of given size
   const groupSize = outputSize / inputSize;
-  console.log(inputSize, outputSize, groupSize);
 
   const groupedByIndex = data.reduce(
     (groupedByIndex, currentItem, currentItemIndex) => {
