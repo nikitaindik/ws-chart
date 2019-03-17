@@ -1,5 +1,5 @@
 import { socketEventTypes } from '../constants';
-import getFakeDataForDisplay from '../utils/fakeData';
+import generateFakeDataForDisplay from '../utils/fakeDataGenerator';
 
 const handleSegmentHistoryRequest = (socket, message) => {
   const segmentId = message.payload;
@@ -8,7 +8,7 @@ const handleSegmentHistoryRequest = (socket, message) => {
       type: socketEventTypes.SEGMENT_HISTORY,
       payload: {
         segmentId,
-        data: getFakeDataForDisplay(),
+        data: generateFakeDataForDisplay(),
       },
     }),
   );

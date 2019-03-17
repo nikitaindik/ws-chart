@@ -5,6 +5,7 @@ import segmentsModule from './segments';
 import style from './App.module.css';
 
 const { SegmentList, Chart } = segmentsModule.components;
+
 class App extends Component {
   render() {
     return (
