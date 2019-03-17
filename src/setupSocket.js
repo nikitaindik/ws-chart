@@ -49,10 +49,17 @@ const socket = new WebSocket('ws://localhost:8080');
 
 // CONNECTION END
 
-const subscriptions = [];
+let subscriptions = [];
 
 const subscribe = callback => {
   subscriptions.push(callback);
+
+  return () => {
+    // Unsubscribe from socket (can be used by useEffect for cleanup)
+    subscriptions = subscriptions.filter(
+      subscription => subscription !== callback,
+    );
+  };
 };
 
 const initMockServer = () => {};

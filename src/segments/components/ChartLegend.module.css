@@ -1,0 +1,39 @@
+.iconWrap {
+  width: 16px;
+  height: 16px;
+}
+
+.iconWrapFlex {
+  display: flex;
+  align-items: center;
+}
+
+.iconLine {
+  height: 3px;
+  width: 100%;
+}
+
+.legendItem {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.legendItem > div + div {
+  margin-left: 8px;
+}
+
+.primaryValue {
+  font-weight: bold;
+}
+
+.legendWrap {
+  height: 100px;
+  display: flex;
+  text-align: left;
+  justify-content: center;
+}
+
+.column {
+  padding: 20px;
+  width: 200px;
+}

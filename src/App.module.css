@@ -1,0 +1,13 @@
+.appWrap {
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.sidebarSection {
+  width: 300px;
+}
+
+.chartSection {
+  flex: 1;
+}

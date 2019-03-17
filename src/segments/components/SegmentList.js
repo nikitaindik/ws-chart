@@ -1,9 +1,4 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-
-import { loadSegmentList, chooseSegment } from '../actions';
-import { selectSegments } from '../selectors';
-
+import React from 'react';
 import Button from '../../components/Button';
 
 import style from './SegmentList.module.css';
@@ -23,42 +18,4 @@ const SegmentList = ({ segments, activeSegmentId, onSegmentClick }) => (
   </div>
 );
 
-const SegmentListContainer = ({
-  areSegmentsLoaded,
-  loadList,
-  chooseSegment,
-  segments,
-  activeSegmentId,
-}) => {
-  useEffect(() => {
-    loadList();
-  }, []);
-
-  if (!areSegmentsLoaded) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <SegmentList
-      segments={segments}
-      onSegmentClick={chooseSegment}
-      activeSegmentId={activeSegmentId}
-    />
-  );
-};
-
-const mapStateToProps = state => ({
-  segments: selectSegments(state),
-  areSegmentsLoaded: state.segments.isListLoaded,
-  activeSegmentId: state.segments.activeSegmentId,
-});
-
-const mapDispatchToProps = {
-  loadList: loadSegmentList,
-  chooseSegment,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SegmentListContainer);
+export default SegmentList;
