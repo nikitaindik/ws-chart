@@ -1,3 +1,5 @@
+import { get } from 'dot-prop-immutable';
+
 import * as actionTypes from './actionTypes';
 import { socketEventTypes } from './constants';
 import api from './api';
@@ -37,8 +39,10 @@ export const requestHistory = segmentId => (
 export const chooseSegment = segmentId => (dispatch, getState) => {
   dispatch(setActiveSegment(segmentId));
 
+  const state = getState();
   const shouldLoadHistory =
-    typeof getState().segments.byId[segmentId].dataByBarSize === 'undefined';
+    typeof get(state, `segments.byId[${segmentId}].dataByBarSize`) ===
+    'undefined';
 
   if (shouldLoadHistory) {
     dispatch(requestHistory(segmentId));

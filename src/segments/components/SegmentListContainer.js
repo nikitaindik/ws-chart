@@ -30,7 +30,7 @@ const SegmentListContainer = ({
 
 const mapStateToProps = state => ({
   segments: selectSegments(state),
-  areSegmentsLoaded: state.segments.isListLoaded,
+  areSegmentsLoaded: state.segments.list.isLoaded,
   activeSegmentId: state.segments.activeSegmentId,
 });
 

@@ -9,7 +9,8 @@ export const selectDisplayData = state => {
     null
   );
 };
-export const selectSegments = state => {
-  const segmentsIds = Object.keys(state.segments.byId);
-  return segmentsIds.map(id => ({ ...state.segments.byId[id], id: +id }));
-};
+
+export const selectSegments = state =>
+  state.segments.list.allIds.map(
+    segmentId => state.segments.list.byId[segmentId],
+  );
