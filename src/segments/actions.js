@@ -16,11 +16,16 @@ export const loadSegmentListSuccess = list => ({
 export const loadSegmentList = () => async dispatch => {
   dispatch(loadSegmentListRequest());
 
+  let segmentList;
+
   try {
-    const segmentList = await api.fetchSegmentList();
-    dispatch(loadSegmentListSuccess(segmentList));
-    dispatch(chooseSegment(segmentList[0].id));
-  } catch {}
+    segmentList = await api.fetchSegmentList();
+  } catch (error) {
+    console.error('Something is wrong with fetchSegmentList request', error);
+  }
+
+  dispatch(loadSegmentListSuccess(segmentList));
+  dispatch(chooseSegment(segmentList[0].id));
 };
 
 export const setActiveSegment = segmentId => ({

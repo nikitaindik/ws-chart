@@ -2,7 +2,7 @@ import React from 'react';
 import { timeFormat } from 'd3-time-format';
 import cx from 'classnames';
 
-import TimeIcon from './TimeIcon';
+import { ReactComponent as TimeIcon } from './TimeIcon.svg';
 import style from './ChartLegend.module.css';
 
 const LegendIconSquare = ({ color }) => (
