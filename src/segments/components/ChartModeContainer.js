@@ -2,10 +2,12 @@ import { connect } from 'react-redux';
 
 import { changeMode } from '../actions';
 
+import { selectActiveBarSize } from '../selectors';
+
 import ChartMode from './ChartMode';
 
 const mapStateToProps = state => ({
-  activeBarSize: state.segments.activeBarSize,
+  activeBarSize: selectActiveBarSize(state),
 });
 
 const mapDispatchToProps = {

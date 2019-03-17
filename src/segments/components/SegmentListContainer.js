@@ -2,12 +2,16 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { loadSegmentList, chooseSegment } from '../actions';
-import { selectSegments } from '../selectors';
+import {
+  selectSegments,
+  selectIsListLoaded,
+  selectActiveSegmentId,
+} from '../selectors';
 
 import SegmentList from './SegmentList';
 
 const SegmentListContainer = ({
-  areSegmentsLoaded,
+  isListLoaded,
   loadList,
   chooseSegment,
   segments,
@@ -15,7 +19,7 @@ const SegmentListContainer = ({
 }) => {
   useEffect(loadList, []);
 
-  if (!areSegmentsLoaded) {
+  if (!isListLoaded) {
     return <div>Loading...</div>;
   }
 
@@ -30,8 +34,8 @@ const SegmentListContainer = ({
 
 const mapStateToProps = state => ({
   segments: selectSegments(state),
-  areSegmentsLoaded: state.segments.list.isLoaded,
-  activeSegmentId: state.segments.activeSegmentId,
+  isListLoaded: selectIsListLoaded(state),
+  activeSegmentId: selectActiveSegmentId(state),
 });
 
 const mapDispatchToProps = {
