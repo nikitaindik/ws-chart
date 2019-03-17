@@ -94,12 +94,18 @@ const handleReceiveUpdate = (state, payload) => {
   const updatedSegmentData = barSizes.reduce((updatedSegmentData, barSize) => {
     const bars = state.byId[segmentId].dataByBarSize[barSize];
     const latestBarStartTimestamp = bars[bars.length - 1].timestamp;
-    const latestBarEndTimestamp = latestBarStartTimestamp + Number(barSize);
+    const latestBarEndTimestamp = latestBarStartTimestamp + Number(barSize) - 1;
 
     const isNewBar = latestBarEndTimestamp < updateTimestamp;
 
     const updatedBars = isNewBar
-      ? addNewBar(bars, change, latestBarEndTimestamp)
+      ? addNewBars(
+          bars,
+          change,
+          latestBarEndTimestamp,
+          updateTimestamp,
+          barSize,
+        )
       : updateLatestBar(bars, change);
 
     return {
@@ -115,15 +121,47 @@ const handleReceiveUpdate = (state, payload) => {
   );
 };
 
-const addNewBar = (bars, change, latestBarEndTimestamp) => {
+const generateNewBarsForPadding = (
+  segmentSize,
+  latestBarEndTimestamp,
+  barsToAddCount,
+  barSize,
+) => {
+  const emptyBars = new Array(barsToAddCount).fill({});
+  return emptyBars.map((bar, index) => ({
+    added: 0,
+    removed: 0,
+    segmentSize,
+    timestamp: latestBarEndTimestamp + 1 + barSize * index,
+  }));
+};
+
+const addNewBars = (
+  bars,
+  change,
+  latestBarEndTimestamp,
+  updateTimestamp,
+  barSize,
+) => {
+  const barsToAddCount = Math.ceil(
+    (updateTimestamp - latestBarEndTimestamp) / barSize,
+  );
+
   const latestBar = bars[bars.length - 1];
-  const newBar = {
-    added: change > 0 ? change : 0,
-    removed: change < 0 ? change : 0,
-    segmentSize: latestBar.segmentSize + change,
-    timestamp: latestBarEndTimestamp,
-  };
-  return [...bars, newBar];
+  const newBars = generateNewBarsForPadding(
+    latestBar.segmentSize,
+    latestBarEndTimestamp,
+    barsToAddCount,
+    barSize,
+  );
+
+  const newLatestBar = newBars[newBars.length - 1];
+
+  newLatestBar.added = change > 0 ? change : 0;
+  newLatestBar.removed = change < 0 ? change : 0;
+  newLatestBar.segmentSize = latestBar.segmentSize + change;
+
+  return [...bars, ...newBars];
 };
 
 const updateLatestBar = (bars, change) => {

@@ -1,15 +1,22 @@
 import { get } from 'dot-prop-immutable';
 
-import * as actionTypes from './actionTypes';
+import {
+  LOAD_SEGMENT_LIST_REQUEST,
+  LOAD_SEGMENT_LIST_SUCCESS,
+  SET_ACTIVE_SEGMENT,
+  RECEIVE_HISTORY,
+  RECEIVE_UPDATE,
+  CHANGE_MODE,
+} from './actionTypes';
 import { socketEventTypes } from './constants';
 import api from './api';
 
 export const loadSegmentListRequest = () => ({
-  type: actionTypes.LOAD_SEGMENT_LIST_REQUEST,
+  type: LOAD_SEGMENT_LIST_REQUEST,
 });
 
 export const loadSegmentListSuccess = list => ({
-  type: actionTypes.LOAD_SEGMENT_LIST_SUCCESS,
+  type: LOAD_SEGMENT_LIST_SUCCESS,
   payload: list,
 });
 
@@ -29,7 +36,7 @@ export const loadSegmentList = () => async dispatch => {
 };
 
 export const setActiveSegment = segmentId => ({
-  type: actionTypes.SET_ACTIVE_SEGMENT,
+  type: SET_ACTIVE_SEGMENT,
   payload: segmentId,
 });
 
@@ -55,7 +62,7 @@ export const chooseSegment = segmentId => (dispatch, getState) => {
 };
 
 export const receiveHistory = (segmentId, data) => ({
-  type: actionTypes.RECEIVE_HISTORY,
+  type: RECEIVE_HISTORY,
   payload: {
     segmentId,
     data,
@@ -63,7 +70,7 @@ export const receiveHistory = (segmentId, data) => ({
 });
 
 export const receiveUpdate = data => ({
-  type: actionTypes.RECEIVE_UPDATE,
+  type: RECEIVE_UPDATE,
   payload: {
     segmentId: data.segmentId,
     timestamp: data.timestamp,
@@ -72,6 +79,6 @@ export const receiveUpdate = data => ({
 });
 
 export const changeMode = mode => ({
-  type: actionTypes.CHANGE_MODE,
+  type: CHANGE_MODE,
   payload: mode,
 });
