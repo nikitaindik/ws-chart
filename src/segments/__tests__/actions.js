@@ -7,9 +7,20 @@ import {
   SET_ACTIVE_SEGMENT,
   LOAD_SEGMENT_LIST_REQUEST,
   LOAD_SEGMENT_LIST_SUCCESS,
+  RECEIVE_HISTORY,
+  RECEIVE_UPDATE,
 } from '../actionTypes';
 
-import { requestHistory, chooseSegment, loadSegmentList } from '../actions';
+import {
+  requestHistory,
+  receiveHistory,
+  receiveUpdate,
+  chooseSegment,
+  loadSegmentList,
+  loadSegmentListRequest,
+  loadSegmentListSuccess,
+  setActiveSegment,
+} from '../actions';
 
 const sendMessageMock = jest.fn();
 const middlewares = [thunk.withExtraArgument({ sendMessage: sendMessageMock })];
@@ -142,5 +153,57 @@ describe('Segments module thunks', () => {
     return store.dispatch(loadSegmentList()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
+  });
+});
+
+describe('Segments module action creators', () => {
+  test('loadSegmentListRequest', () => {
+    const expectedAction = {
+      type: LOAD_SEGMENT_LIST_REQUEST,
+    };
+
+    expect(loadSegmentListRequest()).toEqual(expectedAction);
+  });
+
+  test('loadSegmentListSuccess', () => {
+    const expectedAction = {
+      type: LOAD_SEGMENT_LIST_SUCCESS,
+      payload: [],
+    };
+
+    expect(loadSegmentListSuccess([])).toEqual(expectedAction);
+  });
+
+  test('setActiveSegment', () => {
+    const expectedAction = {
+      type: SET_ACTIVE_SEGMENT,
+      payload: '10',
+    };
+
+    expect(setActiveSegment('10')).toEqual(expectedAction);
+  });
+
+  test('receiveHistory', () => {
+    const expectedAction = {
+      type: RECEIVE_HISTORY,
+      payload: { segmentId: '10', data: { '360000': [] } },
+    };
+
+    expect(receiveHistory('10', { '360000': [] })).toEqual(expectedAction);
+  });
+
+  test('receiveUpdate', () => {
+    const expectedAction = {
+      type: RECEIVE_UPDATE,
+      payload: {
+        segmentId: '10',
+        timestamp: 0,
+        change: -1,
+      },
+    };
+
+    expect(
+      receiveUpdate({ segmentId: '10', timestamp: 0, change: -1 }),
+    ).toEqual(expectedAction);
   });
 });
