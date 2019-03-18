@@ -1,6 +1,4 @@
-const ONE_MINUTE_IN_MS = 60 * 1000;
-const ONE_HOUR_IN_MS = 60 * ONE_MINUTE_IN_MS;
-const ONE_DAY_IN_MS = 24 * ONE_HOUR_IN_MS;
+import { time } from '../constants';
 
 const getUpdate = currentSegmentSize => {
   // Aiming for a slightly upward pointing chart
@@ -47,17 +45,14 @@ const generateFakeData = days => {
   // Generated data starts at the beginning of a day
 
   const endTimestamp = Date.now();
-  const startTimestamp = new Date(endTimestamp - days * ONE_DAY_IN_MS).setHours(
-    24,
-    0,
-    0,
-    0,
-  );
+  const startTimestamp = new Date(
+    endTimestamp - days * time.ONE_DAY_IN_MS,
+  ).setHours(24, 0, 0, 0);
 
   return generateDataForPeriod(
     startTimestamp,
     endTimestamp,
-    5 * ONE_MINUTE_IN_MS,
+    time.FIVE_MINUTES_IN_MS,
   );
 };
 
@@ -134,7 +129,7 @@ const trimData = (data, period, barSize) => {
 const reduceDataForDisplay = (
   data,
   outputSize,
-  inputSize = 5 * ONE_MINUTE_IN_MS,
+  inputSize = time.FIVE_MINUTES_IN_MS,
 ) => {
   return batchData(groupData(data, inputSize, outputSize));
 };
@@ -144,36 +139,50 @@ const generateFakeDataForDisplay = () => {
   const fakeData = generateFakeData(30);
 
   // Trim data since we will not show all of it
-  const last30DaysData = trimData(fakeData, 30 * ONE_DAY_IN_MS, ONE_DAY_IN_MS);
+  const last30DaysData = trimData(
+    fakeData,
+    30 * time.ONE_DAY_IN_MS,
+    time.ONE_DAY_IN_MS,
+  );
   const last7DaysData = trimData(
     fakeData,
-    7 * ONE_DAY_IN_MS,
-    6 * ONE_HOUR_IN_MS,
+    time.SEVEN_DAYS_IN_MS,
+    time.SIX_HOURS_IN_MS,
   );
-  const last1DayData = trimData(fakeData, ONE_DAY_IN_MS, ONE_HOUR_IN_MS);
+  const last1DayData = trimData(
+    fakeData,
+    time.ONE_DAY_IN_MS,
+    time.ONE_HOUR_IN_MS,
+  );
   const last1HourData = trimData(
     fakeData,
-    ONE_HOUR_IN_MS,
-    5 * ONE_MINUTE_IN_MS,
+    time.ONE_HOUR_IN_MS,
+    time.FIVE_MINUTES_IN_MS,
   );
 
   // Reduce generated pieces of data into bars of selected size
-  const groupedBy1Day = reduceDataForDisplay(last30DaysData, ONE_DAY_IN_MS);
+  const groupedBy1Day = reduceDataForDisplay(
+    last30DaysData,
+    time.ONE_DAY_IN_MS,
+  );
   const groupedBy6Hours = reduceDataForDisplay(
     last7DaysData,
-    6 * ONE_HOUR_IN_MS,
+    time.SIX_HOURS_IN_MS,
   );
-  const groupedBy1Hour = reduceDataForDisplay(last1DayData, ONE_HOUR_IN_MS);
+  const groupedBy1Hour = reduceDataForDisplay(
+    last1DayData,
+    time.ONE_HOUR_IN_MS,
+  );
   const groupedBy5Mins = reduceDataForDisplay(
     last1HourData,
-    5 * ONE_MINUTE_IN_MS,
+    time.FIVE_MINUTES_IN_MS,
   );
 
   return {
-    [ONE_DAY_IN_MS]: groupedBy1Day,
-    [6 * ONE_HOUR_IN_MS]: groupedBy6Hours,
-    [ONE_HOUR_IN_MS]: groupedBy1Hour,
-    [5 * ONE_MINUTE_IN_MS]: groupedBy5Mins,
+    [time.ONE_DAY_IN_MS]: groupedBy1Day,
+    [time.SIX_HOURS_IN_MS]: groupedBy6Hours,
+    [time.ONE_HOUR_IN_MS]: groupedBy1Hour,
+    [time.FIVE_MINUTES_IN_MS]: groupedBy5Mins,
   };
 };
 
