@@ -1,0 +1,414 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chart snapshot 1`] = `
+<div>
+  <div
+    class="chartWrap"
+  >
+    <div
+      class="VictoryContainer"
+      style="height: 100%; width: 100%; user-select: none; pointer-events: none; position: relative;"
+    >
+      <svg
+        aria-labelledby="victory-container-1-title victory-container-1-desc"
+        height="300"
+        role="img"
+        style="pointer-events: all; width: 100%; height: 100%;"
+        viewBox="0 0 800 300"
+        width="800"
+      >
+        <g
+          role="presentation"
+        >
+          <line
+            role="presentation"
+            shape-rendering="auto"
+            style="stroke: #252525; fill: transparent; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round;"
+            vector-effect="non-scaling-stroke"
+            x1="40"
+            x2="760"
+            y1="250"
+            y2="250"
+          />
+          <g
+            role="presentation"
+          >
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: none; fill: none; pointer-events: painted;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="40"
+              y1="250"
+              y2="20"
+            />
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: transparent; fill: transparent; size: 1px;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="40"
+              y1="250"
+              y2="251"
+            />
+            <text
+              direction="inherit"
+              dx="0"
+              dy="11.969999999999999"
+              x="40"
+              y="261"
+            >
+              <tspan
+                dx="0"
+                style="font-family: 'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif; font-size: 14px; letter-spacing: normal; padding: 10px; fill: #252525; stroke: transparent;"
+                text-anchor="middle"
+                x="40"
+              >
+                02 AM
+              </tspan>
+            </text>
+          </g>
+          <g
+            role="presentation"
+          >
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: none; fill: none; pointer-events: painted;"
+              vector-effect="non-scaling-stroke"
+              x1="760"
+              x2="760"
+              y1="250"
+              y2="20"
+            />
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: transparent; fill: transparent; size: 1px;"
+              vector-effect="non-scaling-stroke"
+              x1="760"
+              x2="760"
+              y1="250"
+              y2="251"
+            />
+            <text
+              direction="inherit"
+              dx="0"
+              dy="11.969999999999999"
+              x="760"
+              y="261"
+            >
+              <tspan
+                dx="0"
+                style="font-family: 'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif; font-size: 14px; letter-spacing: normal; padding: 10px; fill: #252525; stroke: transparent;"
+                text-anchor="middle"
+                x="760"
+              >
+                .001
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          role="presentation"
+        >
+          <line
+            role="presentation"
+            shape-rendering="auto"
+            style="stroke: #252525; fill: transparent; stroke-width: 1; stroke-linecap: round; stroke-linejoin: round;"
+            vector-effect="non-scaling-stroke"
+            x1="40"
+            x2="40"
+            y1="20"
+            y2="250"
+          />
+          <g
+            role="presentation"
+          >
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: #999ea1; opacity: 0.5; fill: none; pointer-events: painted;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="760"
+              y1="207.9723661527347"
+              y2="207.9723661527347"
+            />
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: transparent; fill: transparent; size: 1px;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="39"
+              y1="207.9723661527347"
+              y2="207.9723661527347"
+            />
+            <text
+              direction="inherit"
+              dx="0"
+              dy="4.97"
+              x="29"
+              y="207.9723661527347"
+            >
+              <tspan
+                dx="0"
+                style="font-family: 'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif; font-size: 14px; letter-spacing: normal; padding: 10px; fill: #252525; stroke: transparent;"
+                text-anchor="end"
+                x="29"
+              >
+                0.2
+              </tspan>
+            </text>
+          </g>
+          <g
+            role="presentation"
+          >
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: #999ea1; opacity: 0.5; fill: none; pointer-events: painted;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="760"
+              y1="165.94473230546942"
+              y2="165.94473230546942"
+            />
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: transparent; fill: transparent; size: 1px;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="39"
+              y1="165.94473230546942"
+              y2="165.94473230546942"
+            />
+            <text
+              direction="inherit"
+              dx="0"
+              dy="4.97"
+              x="29"
+              y="165.94473230546942"
+            >
+              <tspan
+                dx="0"
+                style="font-family: 'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif; font-size: 14px; letter-spacing: normal; padding: 10px; fill: #252525; stroke: transparent;"
+                text-anchor="end"
+                x="29"
+              >
+                0.4
+              </tspan>
+            </text>
+          </g>
+          <g
+            role="presentation"
+          >
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: #999ea1; opacity: 0.5; fill: none; pointer-events: painted;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="760"
+              y1="123.91709845820415"
+              y2="123.91709845820415"
+            />
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: transparent; fill: transparent; size: 1px;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="39"
+              y1="123.91709845820415"
+              y2="123.91709845820415"
+            />
+            <text
+              direction="inherit"
+              dx="0"
+              dy="4.97"
+              x="29"
+              y="123.91709845820415"
+            >
+              <tspan
+                dx="0"
+                style="font-family: 'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif; font-size: 14px; letter-spacing: normal; padding: 10px; fill: #252525; stroke: transparent;"
+                text-anchor="end"
+                x="29"
+              >
+                0.6
+              </tspan>
+            </text>
+          </g>
+          <g
+            role="presentation"
+          >
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: #999ea1; opacity: 0.5; fill: none; pointer-events: painted;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="760"
+              y1="81.88946461093886"
+              y2="81.88946461093886"
+            />
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: transparent; fill: transparent; size: 1px;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="39"
+              y1="81.88946461093886"
+              y2="81.88946461093886"
+            />
+            <text
+              direction="inherit"
+              dx="0"
+              dy="4.97"
+              x="29"
+              y="81.88946461093886"
+            >
+              <tspan
+                dx="0"
+                style="font-family: 'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif; font-size: 14px; letter-spacing: normal; padding: 10px; fill: #252525; stroke: transparent;"
+                text-anchor="end"
+                x="29"
+              >
+                0.8
+              </tspan>
+            </text>
+          </g>
+          <g
+            role="presentation"
+          >
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: #999ea1; opacity: 0.5; fill: none; pointer-events: painted;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="760"
+              y1="39.86183076367357"
+              y2="39.86183076367357"
+            />
+            <line
+              role="presentation"
+              shape-rendering="auto"
+              style="stroke: transparent; fill: transparent; size: 1px;"
+              vector-effect="non-scaling-stroke"
+              x1="40"
+              x2="39"
+              y1="39.86183076367357"
+              y2="39.86183076367357"
+            />
+            <text
+              direction="inherit"
+              dx="0"
+              dy="4.97"
+              x="29"
+              y="39.86183076367357"
+            >
+              <tspan
+                dx="0"
+                style="font-family: 'Gill Sans', 'Gill Sans MT', 'Seravek', 'Trebuchet MS', sans-serif; font-size: 14px; letter-spacing: normal; padding: 10px; fill: #252525; stroke: transparent;"
+                text-anchor="end"
+                x="29"
+              >
+                1.0
+              </tspan>
+            </text>
+          </g>
+        </g>
+        <g
+          role="presentation"
+        >
+          <path
+            d="M 758, 250 
+A 0 0 0 0 1, 758, 250 
+L 758, 39.86183076367357 
+A 0 0 0 0 1, 758, 39.86183076367357 
+L 762, 39.86183076367357 
+A 0 0 0 0 1, 762, 39.86183076367357 
+L 762, 250 
+A 0 0 0 0 1, 762, 250 
+ z"
+            role="presentation"
+            shape-rendering="auto"
+            style="fill: #6c59d3; stroke: #6c59d3; padding: 8px; stroke-width: 0;"
+          />
+        </g>
+        <g
+          role="presentation"
+        >
+          <path
+            d="M 758, 250 
+A 0 0 0 0 1, 758, 250 
+L 758, 39.86183076367357 
+A 0 0 0 0 1, 758, 39.86183076367357 
+L 762, 39.86183076367357 
+A 0 0 0 0 1, 762, 39.86183076367357 
+L 762, 250 
+A 0 0 0 0 1, 762, 250 
+ z"
+            role="presentation"
+            shape-rendering="auto"
+            style="fill: #999ea1; stroke: #999ea1; padding: 8px; stroke-width: 0;"
+          />
+        </g>
+        <g
+          clip-path="url(#victory-clip-2)"
+          style="height: 100%; width: 100%; user-select: none;"
+        >
+          <defs>
+            <clippath
+              id="victory-clip-2"
+            >
+              <rect
+                height="230"
+                role="presentation"
+                shape-rendering="auto"
+                vector-effect="non-scaling-stroke"
+                width="720"
+                x="40"
+                y="20"
+              />
+            </clippath>
+          </defs>
+          <path
+            role="presentation"
+            shape-rendering="auto"
+            style="fill: transparent; stroke: #008af7; stroke-width: 2;"
+          />
+        </g>
+        <g>
+          <path
+            d="M 760, 39.86183076367357
+      m 0, 0
+      a 0, 0 0 1,0 0,0
+      a 0, 0 0 1,0 0,0"
+            role="presentation"
+            shape-rendering="auto"
+            style="fill: #008af7; stroke: #fff; stroke-width: 1px;"
+          />
+        </g>
+      </svg>
+      <div
+        style="z-index: 99; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"
+      >
+        <svg
+          height="300"
+          style="overflow: visible; width: 100%; height: 100%;"
+          viewBox="0 0 800 300"
+          width="800"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

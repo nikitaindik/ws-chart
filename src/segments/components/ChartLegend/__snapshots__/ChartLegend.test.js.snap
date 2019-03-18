@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChartLegend snapshot 1`] = `
+<div>
+  <div
+    class="legendWrap"
+  >
+    <div
+      class="column"
+    >
+      <div
+        class="legendItem"
+      >
+        <div>
+          <div
+            class="iconWrap"
+            style="background: rgb(108, 89, 211);"
+          />
+        </div>
+        <div>
+          Added
+          :
+        </div>
+        <div
+          class=""
+        >
+          1
+        </div>
+      </div>
+      <div
+        class="legendItem"
+      >
+        <div>
+          <div
+            class="iconWrap"
+            style="background: rgb(153, 158, 161);"
+          />
+        </div>
+        <div>
+          Removed
+          :
+        </div>
+        <div
+          class=""
+        >
+          1
+        </div>
+      </div>
+    </div>
+    <div
+      class="column"
+    >
+      <div
+        class="legendItem"
+      >
+        <div>
+          <div
+            class="iconWrap iconWrapFlex"
+          >
+            <div
+              class="iconLine"
+              style="background: rgb(0, 138, 247);"
+            />
+          </div>
+        </div>
+        <div>
+          Size
+          :
+        </div>
+        <div
+          class="primaryValue"
+        >
+          1
+        </div>
+      </div>
+      <div
+        class="legendItem"
+      >
+        <div>
+          <svg>
+            TimeIcon.svg
+          </svg>
+        </div>
+        <div>
+          Time
+          :
+        </div>
+        <div
+          class=""
+        >
+          Jan 01, 02:22
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

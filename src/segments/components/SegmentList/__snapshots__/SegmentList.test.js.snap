@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SegmentList snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <button
+        class="button active"
+      >
+        Ten
+      </button>
+    </div>
+    <div>
+      <button
+        class="button"
+      >
+        Twenty
+      </button>
+    </div>
+  </div>
+</div>
+`;

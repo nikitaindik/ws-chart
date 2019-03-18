@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChartLegend snapshot 1`] = `
+<div>
+  <div
+    class="wrap"
+  >
+    <button
+      class="button"
+    >
+      Last 30 days
+    </button>
+    <button
+      class="button"
+    >
+      Last 7 days
+    </button>
+    <button
+      class="button"
+    >
+      Last 24 hours
+    </button>
+    <button
+      class="button"
+    >
+      Last 60 minutes
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ChartMode snapshot 1`] = `
+<div>
+  <div
+    class="wrap"
+  >
+    <button
+      class="button"
+    >
+      Last 30 days
+    </button>
+    <button
+      class="button"
+    >
+      Last 7 days
+    </button>
+    <button
+      class="button"
+    >
+      Last 24 hours
+    </button>
+    <button
+      class="button"
+    >
+      Last 60 minutes
+    </button>
+  </div>
+</div>
+`;
