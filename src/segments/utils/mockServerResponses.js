@@ -43,7 +43,7 @@ const handleSegmentHistoryRequest = (socket, message) => {
         },
       }),
     );
-  }, 1000);
+  }, 10000);
 };
 
 const mockServerResponses = (socket, message) => {

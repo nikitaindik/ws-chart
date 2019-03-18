@@ -1,10 +1,8 @@
 import React from 'react';
 import Button from '../../../components/Button';
 
-import style from './SegmentList.module.css';
-
 const SegmentList = ({ segments, activeSegmentId, onSegmentClick }) => (
-  <div className={style.list}>
+  <div>
     {segments.map(segment => (
       <div key={segment.id}>
         <Button

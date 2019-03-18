@@ -11,6 +11,7 @@ class App extends Component {
     return (
       <div className={style.appWrap}>
         <div className={style.sidebarSection}>
+          <div className={style.selections}>Selections</div>
           <SegmentList />
         </div>
         <div className={style.chartSection}>

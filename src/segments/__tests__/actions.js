@@ -144,6 +144,7 @@ describe('Segments module thunks', () => {
         payload: [
           { id: '10', name: 'Tomato lovers' },
           { id: '20', name: 'Lemon aficionados' },
+          { id: '30', name: 'Banana people' },
         ],
         type: LOAD_SEGMENT_LIST_SUCCESS,
       },

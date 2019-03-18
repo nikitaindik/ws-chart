@@ -5,9 +5,10 @@
   color: inherit;
   background-color: transparent;
   cursor: pointer;
+  outline: none;
 
   padding: 8px;
-  width: 200px;
+  width: 180px;
 }
 
 .active {

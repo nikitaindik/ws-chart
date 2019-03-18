@@ -25,7 +25,7 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
       domainPadding={20}
       scale={{ x: 'time' }}
       height={300}
-      width={700}
+      width={800}
       containerComponent={
         <VictoryVoronoiContainer
           voronoiDimension="x"
