@@ -2,7 +2,7 @@ Demo: http://warm-education.surge.sh/
 
 ## What is it
 
-Real time chart that draws bars and a line for selected audience segment. It uses mocked websocket, but it can easily swapped for real API by changing settings in .env file.
+Real time chart that draws bars and a line for selected audience segment. It uses mocked websocket, but it can easily swapped for real API by changing settings in .env file. In a mocked mode it generates chart updates every few seconds.
 
 ## Available scripts
 
