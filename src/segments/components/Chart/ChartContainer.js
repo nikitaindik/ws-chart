@@ -9,7 +9,7 @@ import { selectDisplayData, selectActiveBarSize } from '../../selectors';
 import webSocketConnection from '../../../core/webSocketConnection';
 
 import ChartLegend from '../ChartLegend/ChartLegend';
-import Chart from './Chart';
+import Chart, { LoadingPlaceholder } from './Chart';
 import ChartModeContainer from '../ChartMode/ChartModeContainer';
 
 import mockWebSocketServer from '../../../core/mockWebSocketServer';
@@ -42,7 +42,12 @@ const ChartContainer = ({ dataToDisplay, activeBarSize, dispatch }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   if (!dataToDisplay) {
-    return null;
+    return (
+      <>
+        <LoadingPlaceholder />
+        <ChartModeContainer />
+      </>
+    );
   }
 
   const latestBarData = dataToDisplay[dataToDisplay.length - 1];

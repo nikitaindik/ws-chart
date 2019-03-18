@@ -58,7 +58,6 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
         y="added"
         name="added"
         style={{ data: { fill: colors.CHART_POSITIVE_COLOR } }}
-        // animate
       />
       <VictoryBar
         data={data}
@@ -66,7 +65,6 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
         y="removed"
         name="removed"
         style={{ data: { fill: colors.CHART_NEGATIVE_COLOR } }}
-        // animate
       />
       <VictoryLine
         data={data}
@@ -75,7 +73,6 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
         name="segmentSize"
         interpolation="natural"
         style={{ data: { stroke: colors.CHART_LINE_COLOR } }}
-        // animate
       />
       <VictoryScatter
         data={data}
@@ -89,10 +86,13 @@ const Chart = ({ data, setActiveBarData, setIsHovered }) => (
             strokeWidth: '1px',
           },
         }}
-        // animate
       />
     </VictoryChart>
   </div>
+);
+
+export const LoadingPlaceholder = () => (
+  <div className={style.loadingPlaceholder}>Loading...</div>
 );
 
 export default Chart;

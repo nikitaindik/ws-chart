@@ -6,7 +6,7 @@ const fetchSegmentList = () => {
         { name: 'Lemon aficionados', id: '20' },
         { name: 'Banana people', id: '30' },
       ]);
-    }, 3000);
+    }, 500);
   });
 };
 
